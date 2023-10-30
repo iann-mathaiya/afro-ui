@@ -1,6 +1,8 @@
 'use client'
 import { Link } from "lucide-react"
 import { useRef, useState } from "react"
+import useSound from 'use-sound'
+// import softBells from '/soft-bells.mp3'
 
 type Player = {
     id: number
@@ -18,8 +20,12 @@ const players: Player[] = [
 export default function ShareLink() {
 
     const inputRef = useRef(null)
-    const [link, setLink] = useState('curation.agency/?via=alicorak')
     const [isCopied, setIsCopied] = useState(false)
+    const [link, setLink] = useState('curation.agency/?via=alicorak')
+
+    const soundAlert = '/soft-bells.mp3'
+
+    const [play] = useSound(soundAlert)
 
     function copyToClipboard(event: React.FormEvent<HTMLFormElement> ) {
 
@@ -29,7 +35,11 @@ export default function ShareLink() {
 
         navigator.clipboard.writeText(link)
 
-        setIsCopied(true)
+        play()
+
+        setTimeout(() => {
+            setIsCopied(true)
+        }, 1000)
 
     }
 
@@ -45,8 +55,8 @@ export default function ShareLink() {
             <div className="w-full mt-4">
                 <form onSubmit={copyToClipboard}>
                     <input ref={inputRef} type="text" value={link} disabled className="py-2 px-4 rounded-full w-full text-gray-200 disabled:bg-gray-700 border border-gray-600" />
-                    <button type="submit" className="py-2 px-4 mt-1 rounded-full w-full text-lime-400 bg-lime-800/40">
-                        <span>{ isCopied ? 'Link Copied' : 'Copy Link' }</span>
+                    <button type="submit" disabled={isCopied} className="py-2 px-4 mt-1 rounded-full w-full text-lime-400 bg-lime-800/40 disabled:cursor-alias">
+                        <span className=" ">{ isCopied ? 'Link Copied' : 'Copy Link' }</span>
                     </button>
                 </form>
             </div>
@@ -67,7 +77,6 @@ export default function ShareLink() {
                 </div>
                 <p className="text-sm text-gray-300 pl-4">invite more friends</p>
             </div>
-
 
         </section>
     )
