@@ -1,8 +1,7 @@
 'use client'
+import useSound from 'use-sound'
 import { Link } from "lucide-react"
 import { useRef, useState } from "react"
-import useSound from 'use-sound'
-// import softBells from '/soft-bells.mp3'
 
 type Player = {
     id: number
@@ -21,13 +20,13 @@ export default function ShareLink() {
 
     const inputRef = useRef(null)
     const [isCopied, setIsCopied] = useState(false)
-    const [link, setLink] = useState('curation.agency/?via=alicorak')
+    const [link] = useState('curation.agency/?via=alicorak')
 
     const soundAlert = '/soft-bells.mp3'
 
     const [play] = useSound(soundAlert)
 
-    function copyToClipboard(event: React.FormEvent<HTMLFormElement> ) {
+    function copyToClipboard(event: React.FormEvent<HTMLFormElement>) {
 
         const link = inputRef.current!['value']
 
@@ -56,7 +55,7 @@ export default function ShareLink() {
                 <form onSubmit={copyToClipboard}>
                     <input ref={inputRef} type="text" value={link} disabled className="py-2 px-4 rounded-full w-full text-gray-200 disabled:bg-gray-700 border border-gray-600" />
                     <button type="submit" disabled={isCopied} className="py-2 px-4 mt-1 rounded-full w-full text-lime-400 bg-lime-800/40 disabled:cursor-alias">
-                        <span className=" ">{ isCopied ? 'Link Copied' : 'Copy Link' }</span>
+                        <span className=" ">{isCopied ? 'Link Copied' : 'Copy Link'}</span>
                     </button>
                 </form>
             </div>
