@@ -39,7 +39,7 @@ export default function EvilDesignCaseStudies() {
 
       </div>
 
-      <div className="pb-4 flex gap-4 overflow-x-auto">
+      <div className="pb-4 flex gap-4 overflow-x-auto no-scrollbar">
 
         {caseStudies.map(study =>
           <div key={study.id} className="group">
